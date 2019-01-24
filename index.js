@@ -1,8 +1,8 @@
-const express = require('express'),
-          app = express(),
-     template = require('./views/template')
-         path = require('path');
+const express = require('express');
+const template = require('./views/template');
+const path = require('path');
 
+const app = express();
 
 // Serving static files
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
