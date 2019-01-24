@@ -42,17 +42,19 @@ export function fetchSummoner(summonerName) {
       api_key: apiKey,
     });
 
-    const opts = {
-      data: query,
-    }
-
-    return axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${apiKey}`)
-      .then(function(response) {
-        console.log(response);
-        dispatch(receiveSummoner(response))
-      })
-      .catch(function(err) {
-        console.log(err);
-      })
+    return axios({
+      method: 'get',
+      url: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?${query}`,
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(function(response) {
+      console.log(response);
+      dispatch(receiveSummoner(response))
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
   }
 }
