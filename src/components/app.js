@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import Search from './search'
 
 class App extends Component {
   render() {
@@ -7,6 +8,7 @@ class App extends Component {
 
     return (
        <div>
+        <Search />
        </div>
     );
   }
