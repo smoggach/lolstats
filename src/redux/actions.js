@@ -46,7 +46,7 @@ export function fetchSummoner(summonerName) {
       data: query,
     }
 
-    return axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}`, opts)
+    return axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${apiKey}`)
       .then(function(response) {
         console.log(response);
         dispatch(receiveSummoner(response))
