@@ -5,10 +5,16 @@ import { fetchSummoner } from '../redux/actions'
 class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = { searchInput: '' };
+    this.state = { searchInput: '', searchValue: '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.searchValue != prevState.searchValue) {
+      this.props.dispatch(fetchSummoner(this.state.searchValue));
+    }
   }
 
   handleChange(event) {
@@ -17,12 +23,8 @@ class Search extends Component {
 
   handleSubmit(event) {
     // TODO: validate input
-
+    this.setState({ searchValue: this.state.searchInput });
     event.preventDefault();
-
-    const { dispatch } = this.props
-
-    dispatch(fetchSummoner(this.state.searchInput));
   }
 
   render() {

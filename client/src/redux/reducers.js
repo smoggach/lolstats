@@ -18,7 +18,8 @@ function matches( state = {isFetching: false, matches: []}, action) {
     case RECEIVE_MATCHES:
       return Object.assign({}, state, {
         isFetching: false,
-        matches: action.matches
+        matches: action.matches,
+        cursor: action.cursor
       });
     default:
       return state

@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import Search from './search'
+import Matches from './matches'
+import SummonerInfo from './summonerInfo'
 
 class App extends Component {
   render() {
@@ -9,6 +11,8 @@ class App extends Component {
     return (
        <div>
         <Search />
+        <SummonerInfo />
+        <Matches />
        </div>
     );
   }

@@ -6,8 +6,6 @@ export const RECEIVE_SUMMONER = 'RECEIVE_SUMMONER';
 export const REQUEST_MATCHES = 'REQUEST_MATCHES';
 export const RECEIVE_MATCHES = 'RECEIVE_MATCHES';
 
-const apiKey = "RGAPI-f793fd88-15da-4aeb-95eb-4642105cc085";
-
 function requestSummoner() {
   return {
     type: REQUEST_SUMMONER
@@ -38,21 +36,45 @@ export function fetchSummoner(summonerName) {
   return dispatch => {
     dispatch(requestSummoner())
 
-    const query = querystring.stringify({
-      api_key: apiKey,
-    });
+    let url = `${process.env.API_URL}/summoner/${summonerName}`
 
     return axios({
       method: 'get',
-      url: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?${query}`,
+      url: url,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       }
     })
     .then(function(response) {
-      console.log(response);
-      dispatch(receiveSummoner(response))
+      dispatch(receiveSummoner(response.data))
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+}
+
+export function fetchMatches(accountId, cursor) {
+  return dispatch => {
+    dispatch(requestMatches())
+
+    let url = `${process.env.API_URL}/matches/${accountId}`
+
+    if (cursor) {
+      url += `?cursor=${cursor}`
+    }
+
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    .then(function(response) {
+      dispatch(receiveMatches(response))
     })
     .catch(function(err) {
       console.log(err);
