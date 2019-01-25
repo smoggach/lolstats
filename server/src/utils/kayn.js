@@ -1,6 +1,6 @@
 'use strict';
 
 const { Kayn, REGIONS } = require('kayn')
-const kayn = Kayn("RGAPI-f793fd88-15da-4aeb-95eb-4642105cc085");
+const kayn = Kayn("RGAPI-d3582ae4-28d9-4760-b82c-f453a7b10478");
 
 module.exports = kayn;
