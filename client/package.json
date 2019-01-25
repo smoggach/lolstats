@@ -12,10 +12,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "npm run build",
-    "pack": "webpack --config webpack.config.js",
-    "babel": "babel src -d views",
-    "build": "npm run pack && npm run babel"
+    "heroku-postbuild": "npm run build-prod",
+    "build-prod": "webpack --env.API_URL=http://lol-summoner-stats-api.herokuapp.com --config webpack.config.js && npm run babel",
+    "build-dev": "webpack --env.API_URL=http://localhost:8080 --config webpack.config.js && npm run babel",
+    "babel": "babel src -d views"
   },
   "dependencies": {
     "axios": "^0.18.0",
