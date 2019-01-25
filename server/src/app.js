@@ -13,9 +13,17 @@ app.disable('x-powered-by');
 app.use(cors());
 
 router.get('/summoner/:name', async function(req, res, next) {
-  return summoner(req.params.name);
+  console.log(`Getting summoner ${req.params.name}`);
+  const response = await summoner(req.params.name);
+  res.status(200).json(response);
 });
 
-router.get('/matches', async function(req, res, next) {
-  return matches(req.query && req.query.cursor);
+router.get('/matches/:accountId', async function(req, res, next) {
+  console.log(`Getting matches for ${req.params.accountId} cursor=${req.query && req.query.cursor}`);
+  const response = await matches(req.params.accountId, req.query && req.query.cursor);
+  res.status(200).json(response);
 })
+
+app.use(router);
+
+module.exports = app;
