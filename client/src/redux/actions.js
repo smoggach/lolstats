@@ -47,6 +47,7 @@ export function fetchSummoner(summonerName) {
       url: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?${query}`,
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       }
     })
     .then(function(response) {

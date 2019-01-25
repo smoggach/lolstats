@@ -1,8 +1,11 @@
 const express = require('express');
 const template = require('./views/template');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 
 // Serving static files
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
