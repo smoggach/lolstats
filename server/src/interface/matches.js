@@ -51,7 +51,7 @@ function parseParticipants(participants, teams, players, champId) {
 
 module.exports = async function (accountId, cursor) {
   try {
-    const beginIndex = cursor || 0;
+    const beginIndex = parseInt(cursor) || 0;
     let endIndex = beginIndex + pageLength;
     const query = {
       beginIndex: beginIndex,
@@ -60,7 +60,7 @@ module.exports = async function (accountId, cursor) {
     const matchList = await kayn().MatchlistV4.by.accountID(accountId).query(query);
 
     // stop paginating if we're at the end of the list
-    if (endIndex === matchList.totalGames || matchList.length === matchList.totalGames) {
+    if (endIndex === matchList.totalGames || matchList.matches.length === matchList.totalGames) {
       endIndex = 0;
     }
 
