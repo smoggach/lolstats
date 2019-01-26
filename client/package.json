@@ -13,7 +13,7 @@
   "scripts": {
     "start": "node index.js",
     "heroku-postbuild": "npm run build-prod",
-    "build-prod": "webpack --env.API_URL=http://lol-summoner-stats-api.herokuapp.com --config webpack.config.js && npm run babel",
+    "build-prod": "webpack --env.API_URL=https://lol-summoner-stats-api.herokuapp.com:8080 --config webpack.config.js && npm run babel",
     "build-dev": "webpack --env.API_URL=http://localhost:8080 --config webpack.config.js && npm run babel",
     "babel": "babel src -d views"
   },
