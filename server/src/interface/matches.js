@@ -3,22 +3,6 @@
 const kayn = require('../utils/kayn.js');
 const pageLength = 10;
 
-// function findParticipant(participants, champId) {
-//   for (let participant of participants) {
-//     if (participant.championId === champId) {
-//       return participant;
-//     }
-//   }
-// }
-
-// function findTeam(teams, teamId) {
-//   for (let team of teams) {
-//     if (team.teamId === teamId) {
-//       return team;
-//     }
-//   }
-// }
-
 function parseParticipants(participants, teams, players, champId) {
   const result = {
     winners: [],
@@ -107,6 +91,7 @@ module.exports = async function (accountId, cursor) {
           deaths: participant.stats.deaths,
         });
       }
+
       return {
         matches: matches,
         cursor: endIndex,
