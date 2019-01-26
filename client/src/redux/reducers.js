@@ -28,7 +28,7 @@ function matches( state = {isFetching: false, matches: []}, action) {
         isFetchingMoreMatches: true,
       });
     case RECEIVE_MORE_MATCHES:
-      state.matches.push(action.matches.matches);
+      state.matches.push(...action.matches.matches);
       return Object.assign({}, state, {
         isFetchingMoreMatches: false,
         cursor: action.matches.cursor,
