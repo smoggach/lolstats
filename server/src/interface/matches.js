@@ -3,6 +3,8 @@
 const kayn = require('../utils/kayn.js');
 const pageLength = 10;
 
+// seperate participants into winners and losers and
+// find which participant is the summoner
 function parseParticipants(participants, teams, players, champId) {
   const result = {
     winners: [],
@@ -50,13 +52,19 @@ function parseParticipants(participants, teams, players, champId) {
 module.exports = async function (accountId, cursor) {
   try {
     const beginIndex = cursor || 0;
-    const endIndex = beginIndex + pageLength;
+    let endIndex = beginIndex + pageLength;
     const query = {
       beginIndex: beginIndex,
       endIndex: endIndex,
     };
     const matchList = await kayn().MatchlistV4.by.accountID(accountId).query(query);
 
+    // stop paginating if we're at the end of the list
+    if (endIndex === matchList.totalGames || matchList.length === matchList.totalGames) {
+      endIndex = 0;
+    }
+
+    // get details for each match int he list
     if (matchList.matches && matchList.matches.length) {
       const matches = [];
       let outcome = '';

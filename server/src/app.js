@@ -19,6 +19,7 @@ router.get('/summoner/:name', async function(req, res, next) {
     const response = await summoner(req.params.name);
     res.status(200).json(response);
   } catch(err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });
@@ -29,6 +30,7 @@ router.get('/matches/:accountId', async function(req, res, next) {
     const response = await matches(req.params.accountId, req.query && req.query.cursor);
     res.status(200).json(response);
   } catch(err) {
+    console.log(err);
     res.status(500).send(err);
   }
 })
