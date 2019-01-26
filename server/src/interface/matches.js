@@ -3,20 +3,64 @@
 const kayn = require('../utils/kayn.js');
 const pageLength = 10;
 
-function findParticipant(participants, champId) {
-  for (let participant of participants) {
-    if (participant.championId === champId) {
-      return participant;
-    }
-  }
-}
+// function findParticipant(participants, champId) {
+//   for (let participant of participants) {
+//     if (participant.championId === champId) {
+//       return participant;
+//     }
+//   }
+// }
 
-function findTeam(teams, teamId) {
+// function findTeam(teams, teamId) {
+//   for (let team of teams) {
+//     if (team.teamId === teamId) {
+//       return team;
+//     }
+//   }
+// }
+
+function parseParticipants(participants, teams, players, champId) {
+  const result = {
+    winners: [],
+    losers: [],
+    summonerParticipant: null,
+    summonerOutcome: "Loss",
+  }
+
+  const playerNames = {};
+  for (let player of players) {
+    playerNames[player.participantId] = player.player.summonerName;
+  }
+
+  // determine the winning team
+  let winner;
   for (let team of teams) {
-    if (team.teamId === teamId) {
-      return team;
+    if (team.win === "Win") {
+      winner = team.teamId;
     }
   }
+
+  for (let participant of participants) {
+    const participantInfo = {
+      name: playerNames[participant.participantId],
+      champId: participant.championId,
+    }
+
+    if (participant.teamId === winner) {
+      result.winners.push(participantInfo);
+    } else {
+      result.losers.push(participantInfo);
+    }
+
+    if (participant.championId === champId) {
+      result.summonerParticipant = participant;
+      if (participant.teamId === winner) {
+        result.summonerOutcome = "Win";
+      }
+    }
+  }
+
+  return result;
 }
 
 module.exports = async function (accountId, cursor) {
@@ -31,13 +75,19 @@ module.exports = async function (accountId, cursor) {
 
     if (matchList.matches && matchList.matches.length) {
       const matches = [];
+      let outcome = '';
       for (let match of matchList.matches) {
         const champId = match.champion;
         const matchInfo = await kayn().MatchV4.get(match.gameId);
-        const participant = findParticipant(matchInfo.participants, champId);
-        const team = findTeam(matchInfo.teams, participant.teamId);
+        const participantInfo = parseParticipants(matchInfo.participants, matchInfo.teams, matchInfo.participantIdentities, champId);
+        const participant = participantInfo.summonerParticipant;
+        const items = [];
+        for (let i = 0; i <= 6; i++) {
+          items.push(participant.stats['item'+i]);
+        }
+
         matches.push({
-          outcome: team.win,
+          outcome: participantInfo.summonerOutcome,
           duration: matchInfo.gameDuration,
           champName: champId,
           spells: [
@@ -49,6 +99,12 @@ module.exports = async function (accountId, cursor) {
           champLevel: participant.stats.champLevel,
           creepScore: "todo",
           creepScoreMinute: "todo",
+          items: items,
+          winners: participantInfo.winners,
+          losers: participantInfo.losers,
+          kills: participant.stats.kills,
+          assists: participant.stats.assists,
+          deaths: participant.stats.deaths,
         });
       }
       return {
