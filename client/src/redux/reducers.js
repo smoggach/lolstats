@@ -1,4 +1,6 @@
-import { REQUEST_SUMMONER, RECEIVE_SUMMONER, REQUEST_MATCHES, RECEIVE_MATCHES } from './actions'
+import { REQUEST_SUMMONER, RECEIVE_SUMMONER } from './actions'
+import { REQUEST_MATCHES, RECEIVE_MATCHES } from './actions'
+import { REQUEST_MORE_MATCHES, RECEIVE_MORE_MATCHES } from './actions'
 
 function matches( state = {isFetching: false, matches: []}, action) {
   switch (action.type) {
@@ -20,6 +22,16 @@ function matches( state = {isFetching: false, matches: []}, action) {
         isFetchingMatches: false,
         matches: action.matches.matches,
         cursor: action.matches.cursor
+      });
+    case REQUEST_MORE_MATCHES:
+      return Object.assign({}, state, {
+        isFetchingMoreMatches: true,
+      });
+    case RECEIVE_MORE_MATCHES:
+      state.matches.push(action.matches.matches);
+      return Object.assign({}, state, {
+        isFetchingMoreMatches: false,
+        cursor: action.matches.cursor,
       });
     default:
       return state

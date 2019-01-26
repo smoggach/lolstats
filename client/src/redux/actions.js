@@ -5,6 +5,8 @@ export const REQUEST_SUMMONER = 'REQUEST_SUMMONER';
 export const RECEIVE_SUMMONER = 'RECEIVE_SUMMONER';
 export const REQUEST_MATCHES = 'REQUEST_MATCHES';
 export const RECEIVE_MATCHES = 'RECEIVE_MATCHES';
+export const REQUEST_MORE_MATCHES = 'REQUEST_MORE_MATCHES';
+export const RECEIVE_MORE_MATCHES = 'RECEIVE_MORE_MATCHES';
 
 function requestSummoner() {
   return {
@@ -28,6 +30,19 @@ function requestMatches() {
 function receiveMatches(matches) {
   return {
     type: RECEIVE_MATCHES,
+    matches: matches
+  }
+}
+
+function requestMoreMatches() {
+  return {
+    type: REQUEST_MORE_MATCHES
+  }
+}
+
+function receiveMoreMatches(matches) {
+  return {
+    type: RECEIVE_MORE_MATCHES,
     matches: matches
   }
 }
@@ -57,7 +72,11 @@ export function fetchSummoner(summonerName) {
 
 export function fetchMatches(accountId, cursor) {
   return dispatch => {
-    dispatch(requestMatches())
+    if (cursor) {
+      dispatch(requestMoreMatches());
+    } else {
+      dispatch(requestMatches())
+    }
 
     let url = `${process.env.API_URL}/matches/${accountId}`
 
@@ -74,7 +93,11 @@ export function fetchMatches(accountId, cursor) {
       }
     })
     .then(function(response) {
-      dispatch(receiveMatches(response.data))
+      if (cursor) {
+        dispatch(receiveMoreMatches(response.data));
+      } else {
+        dispatch(receiveMatches(response.data));
+      }
     })
     .catch(function(err) {
       console.log(err);

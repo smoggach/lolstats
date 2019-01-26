@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import { fetchMatches } from '../redux/actions'
 
 class Matches extends Component {
   constructor(props) {
     super(props);
     this.state = { matches: [] };
+  }
+
+  fetchMoreMatches() {
+    this.props.dispatch(fetchMatches(this.props.summoner.accountId, this.props.cursor));
   }
 
   renderMatches(props) {
@@ -87,12 +92,27 @@ class Matches extends Component {
     return (<div>{matchItems}</div>)
   }
 
+  renderMore(props) {
+    if (props.fetching) {
+      return(<div className="lds-dual-ring" />)
+    } else if (props.matches && props.matches.length && props.cursor) {
+      return(<button type="button" onClick={props.click}>Show More</button>)
+    }
+
+    return(null)
+  }
+
   render() {
     const { } = this.props
 
     return (
        <div className="container">
         <this.renderMatches matches={this.props.matches} fetching={this.props.isFetchingMatches}/>
+        <this.renderMore
+          matches={this.props.matches}
+          fetching={this.props.isFetchingMoreMatches}
+          cursor={this.props.cursor}
+          click={this.fetchMoreMatches.bind(this)}/>
        </div>
     );
   }
