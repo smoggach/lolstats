@@ -72,3 +72,16 @@ strong {
   border: solid #980000;
   border-width: 2px 2px;
 }
+
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  flex-basis: 20%;
+}
+
+.player-column {
+  width: 50%;
+  display: inline-block;
+}

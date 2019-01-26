@@ -74,7 +74,7 @@ export function fetchMatches(accountId, cursor) {
       }
     })
     .then(function(response) {
-      dispatch(receiveMatches(response))
+      dispatch(receiveMatches(response.data))
     })
     .catch(function(err) {
       console.log(err);
