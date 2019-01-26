@@ -4,20 +4,20 @@ function matches( state = {isFetching: false, matches: []}, action) {
   switch (action.type) {
     case REQUEST_SUMMONER:
       return Object.assign({}, state, {
-        isFetching: true,
+        isFetchingSummoner: true,
       });
     case RECEIVE_SUMMONER:
       return Object.assign({}, state, {
-        isFetching: false,
+        isFetchingSummoner: false,
         summoner: action.summoner
       });
     case REQUEST_MATCHES:
       return Object.assign({}, state, {
-        isFetching: true,
+        isFetchingMatches: true,
       });
     case RECEIVE_MATCHES:
       return Object.assign({}, state, {
-        isFetching: false,
+        isFetchingMatches: false,
         matches: action.matches.matches,
         cursor: action.matches.cursor
       });

@@ -11,7 +11,9 @@ class Matches extends Component {
   renderMatches(props) {
     const matches = props.matches;
     let matchItems = [];
-    if (matches && matches.length) {
+    if (props.fetching) {
+      return(<div className="lds-dual-ring" />)
+    } else if (matches && matches.length) {
       for (let match of matches) {
         let runes = [];
         if (match.runes && match.runes.length) {
@@ -81,6 +83,7 @@ class Matches extends Component {
         )
       }
     }
+
     return (<div>{matchItems}</div>)
   }
 
@@ -89,7 +92,7 @@ class Matches extends Component {
 
     return (
        <div className="container">
-        <this.renderMatches matches={this.props.matches} />
+        <this.renderMatches matches={this.props.matches} fetching={this.props.isFetchingMatches}/>
        </div>
     );
   }

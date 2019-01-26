@@ -28,17 +28,17 @@ class SummonerInfo extends Component {
           <strong>Level:</strong> {summonerLevel} <br />
         </div>
       )
+    } else if (props.fetching) {
+      return (<div className="lds-dual-ring" />)
     }
 
     return(null)
   }
 
   render() {
-
-
     return (
        <div className="container">
-        <this.summonerInfo summoner={this.props.summoner}/>
+        <this.summonerInfo summoner={this.props.summoner} fetching={this.props.isFetchingSummoner}/>
        </div>
     );
   }
