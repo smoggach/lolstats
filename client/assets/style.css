@@ -66,6 +66,12 @@ strong {
   background: whitesmoke;
 }
 
+.wrap-inner {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .container {
   background: white;
   border-color: red;
@@ -77,13 +83,75 @@ strong {
   display: flex;
 }
 
-.flex-item {
-  flex-basis: 20%;
+.match {
+  margin: 4px 4px 4px 4px;
+}
+
+.match-summary {
+  width: 128px;
+}
+
+.match-stats {
+  width: 128px;
+}
+
+.match-items {
+  width: 72px;
+  height: 48px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.match-participants {
+  width: 512px;
+}
+
+.match-participant {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.win {
+  background-color: #bdfce5;
+}
+
+.lose {
+  background-color: #fcbdbd;
 }
 
 .player-column {
-  width: 50%;
+  width: 46%;
+  margin-left: 2%;
+  margin-right: 2%;
   display: inline-block;
+  overflow: hidden;
+}
+
+.item-img {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.champ-img {
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+}
+
+.participant-img {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.item-container {
+  display: flex;
+  width: 72px;
 }
 
 /* activity indicator */
