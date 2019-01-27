@@ -1,7 +1,7 @@
 'use strict';
 
 const kayn = require('../utils/kayn.js');
-const pageLength = 10;
+const pageLength = 5;
 
 // seperate participants into winners and losers and
 // find which participant is the summoner
@@ -77,6 +77,10 @@ module.exports = async function (accountId, cursor) {
         for (let i = 0; i <= 6; i++) {
           items.push(participant.stats['item'+i]);
         }
+        let kda = "Perfect";
+        if (participant.stats.deaths !== 0) {
+          kda = ((participant.stats.kills + participant.stats.assists) / participant.stats.deaths).toFixed(2) + ":1";
+        }
 
         matches.push({
           outcome: participantInfo.summonerOutcome,
@@ -87,7 +91,7 @@ module.exports = async function (accountId, cursor) {
             { id: participant.stats.spell2Id, name: "todo" },
           ],
           runes: participant.runes,
-          kda: (participant.stats.kills + participant.stats.assists) / participant.stats.deaths,
+          kda: kda,
           champLevel: participant.stats.champLevel,
           creepScore: "todo",
           creepScoreMinute: "todo",
